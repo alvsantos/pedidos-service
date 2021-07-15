@@ -1,40 +1,30 @@
 package br.com.salaobeleza.pedidosservice.dominio;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
+@Document
 public class Pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario_solicitante")
     private Usuario solicitante;
 
-    @ManyToOne
-    @JoinColumn(name = "id_endereco")
     private Endereco enderecoEntrega;
 
-    @ManyToOne
-    @JoinColumn(name = "id_estabelecimento")
     private Estabelecimento estabelecimento;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "id_pedido")
     private List<ItemPedido> itensPedido;
 
-    @Enumerated(EnumType.STRING)
     private FormaPagamento formaPagamento;
 
-    @Enumerated(EnumType.STRING)
     private StatusPedido status;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
